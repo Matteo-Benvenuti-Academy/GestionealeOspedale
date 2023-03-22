@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ospedale.GestionaleOspedale.models.Visita;
-import com.ospedale.GestionaleOspedale.services.VisitaServices;
+import com.ospedale.GestionaleOspedale.services.VisitaService;
 
 @RestController
 @RequestMapping("ospedale")
@@ -22,7 +22,7 @@ public class VisitaController {
 	
 	
 	@Autowired
-	private VisitaServices service;
+	private VisitaService service;
 	
 	
 	@PostMapping
@@ -40,7 +40,8 @@ public class VisitaController {
 	
 	@GetMapping
 	public List<Visita> findAll(){
-		return service.findAll();
+		List<Visita> temp = service.findAll();
+		return temp;
 	}
 	
 	@DeleteMapping("/{varId}")

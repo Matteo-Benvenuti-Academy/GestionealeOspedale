@@ -2,11 +2,17 @@ package com.ospedale.GestionaleOspedale.models;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,10 +25,6 @@ public class Visita {
 	@Column(name = "visitaID")
 	private Integer Id;
 	@Column
-	private String nominativo;
-	@Column
-	private String codiceFiscale;
-	@Column
 	private String codiceUnivoco;
 	@Column
 	private String codiceSegreto;
@@ -31,6 +33,10 @@ public class Visita {
 	@Column
 	private Date dataVisita;
 	
+	@JsonManagedReference
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="personaRIF")
+	private Persona paziente;
 	
 	
 	public Integer getId() {
@@ -39,18 +45,7 @@ public class Visita {
 	public void setId(Integer visitaID) {
 		this.Id = visitaID;
 	}
-	public String getNominativo() {
-		return nominativo;
-	}
-	public void setNominativo(String nominativo) {
-		this.nominativo = nominativo;
-	}
-	public String getCodiceFiscale() {
-		return codiceFiscale;
-	}
-	public void setCodiceFiscale(String codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
-	}
+
 	public String getCodiceUnivoco() {
 		return codiceUnivoco;
 	}
@@ -74,6 +69,12 @@ public class Visita {
 	}
 	public void setDataVisita(Date dataVisita) {
 		this.dataVisita = dataVisita;
+	}
+	public Persona getPaziente() {
+		return paziente;
+	}
+	public void setPaziente(Persona paziente) {
+		this.paziente = paziente;
 	}
 	
 }

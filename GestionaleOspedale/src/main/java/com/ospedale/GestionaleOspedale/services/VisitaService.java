@@ -11,7 +11,7 @@ import com.ospedale.GestionaleOspedale.repository.VisitaRepository;
 import com.ospedale.GestionaleOspedale.utils.GeneraStringaUnivoca;
 
 @Service
-public class VisitaServices {
+public class VisitaService {
 	
 	@Autowired
 	private VisitaRepository repository;
@@ -23,11 +23,11 @@ public class VisitaServices {
 		visit.setCodiceUnivoco(univoca);
 		visit.setCodiceSegreto(segreta);
 		
-		return repository.insert(visit);
+		return repository.save(visit) != null ? true : false ;
 	}
 	
 	public Visita findById(Integer id) {
-		return repository.findById(id);
+		return repository.findById(id).orElse(null);
 	}
 	
 	public List<Visita> findAll(){
@@ -35,10 +35,17 @@ public class VisitaServices {
 	}
 	
 	public boolean delete (Integer varId) {
-		if(this.findById(varId) == null)
+		Visita temp = this.findById(varId);
+		if(temp == null)
 			return false;
 		
-		return repository.delete(varId);
+		try {
+			repository.delete(temp);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public boolean update(Integer varId, Visita visit) {
@@ -49,7 +56,7 @@ public class VisitaServices {
 		visit.setId(varId);
 		visit.setCodiceUnivoco(visitaVecchia.getCodiceUnivoco());
 		visit.setCodiceSegreto(visitaVecchia.getCodiceSegreto());
-		return repository.update(visit);
+		return repository.save(visit) != null ? true : false ;
 	}
 	
 	
