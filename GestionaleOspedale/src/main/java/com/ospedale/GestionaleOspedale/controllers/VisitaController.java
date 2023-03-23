@@ -60,11 +60,6 @@ public class VisitaController {
 		return service.update(varId, objVis);
 	}
 	
-	@GetMapping("/cf/{cf}")
-	public List<Visita> findByCF(@PathVariable String cf){
-		return service.findByCF(cf);
-	}
-	
 	@GetMapping("/date/{data}")
 	public List<Visita> findByData(@PathVariable Date data) {
 		return service.findByData(data);

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ospedale.GestionaleOspedale.mapper.Mapper;
 import com.ospedale.GestionaleOspedale.models.Visita;
 import com.ospedale.GestionaleOspedale.repository.VisitaRepository;
 import com.ospedale.GestionaleOspedale.utils.GeneraStringaUnivoca;
@@ -15,6 +16,8 @@ public class VisitaService {
 	
 	@Autowired
 	private VisitaRepository repository;
+	@Autowired
+	private Mapper mapper;
 		
 	public boolean insert (Visita visit) {
 		
@@ -60,20 +63,16 @@ public class VisitaService {
 	}
 	
 	
-	public List<Visita> findByCF(String codiceFiscale){
-		return repository.findByCF(codiceFiscale);
-	}
-	
 	public List<Visita> findByData(Date data) {
-		return repository.findByData(data);
+		return repository.findByDataVisita(data);
 	}
 	
 	public List<Visita> findByPeriod(Date start ,Date stop) {
-		return repository.findByPeriod(start,stop);
+		return repository.findByDataVisitaBetween(start,stop);
 	}
 	
 	public Visita findByCodes(String codUni,String codSeg) {
-		return repository.findByCodes(codUni,codSeg);
+		return repository.findByCodiceUnivocoAndCodiceSegreto(codUni,codSeg).orElse(null);
 	}
 }
 	
